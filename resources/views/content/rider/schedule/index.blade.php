@@ -107,5 +107,5 @@
 
 {{-- NUEVA SECCIÓN DE SCRIPT --}}
 @section('page-script')
-  @vite('resources/assets/js/rider/schedule-picker.js')
+  @vite('resources/assets/js/custom/schedule-picker.js')
 @endsection

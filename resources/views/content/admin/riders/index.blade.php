@@ -12,14 +12,13 @@
   @vite(['resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js', 'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'])
 @endsection
 
-{{-- Carga de Nuestro Script Personalizado --}}
+{{-- SECCIÓN DE SCRIPT VERIFICADA --}}
 @section('page-script')
-  @vite('resources/assets/js/admin/riders-list.js')
+  @vite('resources/assets/js/custom/riders-list.js')
+  @vite('resources/assets/js/custom/schedule-picker.js')
 
   <script>
-    // Escuchamos si hay un mensaje de éxito en la sesión
     @if (session('success'))
-      // Si existe, mostramos la alerta de SweetAlert2
       Swal.fire({
         icon: 'success',
         title: '¡Hecho!',
@@ -42,7 +41,6 @@
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="card-title mb-0">Listado de Riders</h5>
-      {{-- ICONO CORREGIDO AQUÍ: de "ti-plus" a "tabler-plus" --}}
       <a href="{{ route('admin.riders.create') }}" class="btn btn-primary">
         <i class="ti tabler-plus me-1"></i> Crear Rider
       </a>
@@ -63,8 +61,4 @@
       </table>
     </div>
   </div>
-
-  {{-- YA NO NECESITAMOS LA ALERTA ANTIGUA DE BOOTSTRAP --}}
-  {{-- @if (session('success')) ... @endif --}}
-
 @endsection

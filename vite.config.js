@@ -17,6 +17,10 @@ function GetFilesArray(query) {
 // Page JS Files
 const pageJsFiles = GetFilesArray('resources/assets/js/*.js');
 
+// ---- ¡NUEVO! ----
+// Processing Custom JS Files
+const customJsFiles = GetFilesArray('resources/assets/js/custom/**/*.js');
+
 // Processing Vendor JS Files
 const vendorJsFiles = GetFilesArray('resources/assets/vendor/js/*.js');
 
@@ -58,6 +62,7 @@ export default defineConfig({
         'resources/assets/css/demo.css',
         'resources/js/app.js',
         ...pageJsFiles,
+        ...customJsFiles, // <-- ¡NUEVO! Lo añadimos aquí
         ...vendorJsFiles,
         ...LibsJsFiles,
         'resources/js/laravel-user-management.js', // Processing Laravel User Management CRUD JS File
@@ -67,6 +72,7 @@ export default defineConfig({
         ...FontsScssFiles,
         ...FontsJsFiles,
         ...FontsCssFiles
+        // Eliminamos la línea estática que te di antes
       ],
       refresh: true
     }),

@@ -1,0 +1,10 @@
+{
+  "menu": [
+    {
+      "url": "rider/dashboard",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "rider.dashboard"
+    }
+  ]
+}

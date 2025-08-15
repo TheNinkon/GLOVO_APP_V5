@@ -2,7 +2,8 @@
 .schedule-table td {
   text-align: center;
   vertical-align: middle;
-  padding: 0.5rem;
+  padding: 0.25rem;
+  height: 40px;
 }
 
 .slot {
@@ -11,24 +12,27 @@
 }
 
 .slot-available:hover {
-  background-color: #e7e7ff; /* Un color suave para indicar que se puede hacer hover */
+  background-color: #eef1f8; /* Un color suave para indicar que se puede hacer hover */
 }
 
-.slot-info {
-  font-size: 0.8rem;
-  color: #6c757d;
+/* Ocultamos el checkbox y estilizamos la celda entera como un botón */
+.slot-checkbox {
+  display: none;
 }
 
 .slot-mine {
   background-color: #d1f8d1 !important; /* Verde para los turnos propios */
-  border: 1px solid #28a745;
+  border: 2px solid #28a745;
 }
 
 .slot-full {
   background-color: #f8f9fa !important; /* Gris para los turnos llenos o no disponibles */
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
-.slot-full .form-check-input {
-  opacity: 0.5;
+/* Estilo para el contador de horas cuando se pasa del límite */
+#selected-hours-counter.over-limit {
+  color: #ff3e1d; /* Rojo de peligro de Vuexy */
+  font-weight: bold;
 }

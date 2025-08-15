@@ -3,7 +3,6 @@
 @section('title', 'Seleccionar Horario')
 
 @section('page-style')
-  {{-- Estilos personalizados que añadiremos en el siguiente paso --}}
   @vite('resources/assets/css/pages/app-schedule.css')
 @endsection
 
@@ -20,11 +19,25 @@
   @endif
 
   @isset($forecast)
+    {{-- NUEVO PANEL DE RESUMEN --}}
+    <div class="card mb-4" id="schedule-summary" data-contract-hours="{{ $rider->weekly_contract_hours }}">
+      <div class="card-body d-flex justify-content-around">
+        <div class="text-center">
+          <p class="mb-1">Horas de Contrato</p>
+          <h4 class="mb-0">{{ $rider->weekly_contract_hours }}h</h4>
+        </div>
+        <div class="text-center">
+          <p class="mb-1">Horas Seleccionadas</p>
+          <h4 class="mb-0"><span id="selected-hours-counter">{{ number_format($myHoursCount, 1) }}</span>h</h4>
+        </div>
+      </div>
+    </div>
+
+
     <div class="card">
       <div class="card-header">
         <h5 class="card-title">Horario para la semana del {{ $startOfWeek->format('d/m/Y') }}</h5>
-        <p class="card-subtitle">Selecciona las franjas horarias en las que deseas trabajar. Cada celda muestra
-          (<b>ocupados</b>/<b>disponibles</b>).</p>
+        <p class="card-subtitle">Haz clic en los turnos verdes para seleccionarlos.</p>
       </div>
       <div class="card-body">
         <form action="{{ route('rider.schedule.store') }}" method="POST">
@@ -59,20 +72,18 @@
                         $isMine = isset($mySchedules[$slotIdentifier]);
                         $isFull = $booked >= $demand;
                       @endphp
+                      {{-- La lógica de la celda es la misma, pero el contenido cambia --}}
                       <td
                         class="slot @if ($isMine) slot-mine @elseif($isFull || $demand == 0) slot-full @else slot-available @endif">
                         @if ($demand > 0)
-                          <div class="form-check d-flex flex-column align-items-center justify-content-center">
-                            <input class="form-check-input" type="checkbox" name="slots[]" value="{{ $slotIdentifier }}"
-                              id="slot-{{ $i }}-{{ $j }}"
+                          <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input slot-checkbox" type="checkbox" name="slots[]"
+                              value="{{ $slotIdentifier }}" id="slot-{{ $i }}-{{ $j }}"
                               @if ($isMine) checked @endif
                               @if (!$isMine && $isFull) disabled @endif>
-                            <label class="form-check-label slot-info" for="slot-{{ $i }}-{{ $j }}">
-                              {{ $booked }}/{{ $demand }}
-                            </label>
                           </div>
                         @else
-                          <div class="slot-info text-muted">-/-</div>
+                          -
                         @endif
                       </td>
                     @endfor
@@ -92,4 +103,9 @@
       No hay un forecast disponible para tu ciudad esta semana. Por favor, contacta con tu administrador.
     </div>
   @endisset
+@endsection
+
+{{-- NUEVA SECCIÓN DE SCRIPT --}}
+@section('page-script')
+  @vite('resources/assets/js/rider/schedule-picker.js')
 @endsection

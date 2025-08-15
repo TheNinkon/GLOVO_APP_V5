@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable; // Importante para la autenticación
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class Rider extends Authenticatable
@@ -27,6 +27,7 @@ class Rider extends Authenticatable
         'start_date',
         'status',
         'notes',
+        'weekly_contract_hours', // <-- NUEVO CAMPO AÑADIDO
     ];
 
     protected $hidden = [

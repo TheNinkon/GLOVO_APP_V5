@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RiderLoginController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest:rider')->except('logout');
-    }
+    // SE HA ELIMINADO EL MÉTODO __construct() DE AQUÍ
 
     public function showLoginForm()
     {

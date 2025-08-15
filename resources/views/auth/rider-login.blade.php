@@ -3,6 +3,9 @@
 @section('page-style')
   @vite('resources/assets/vendor/scss/pages/page-auth.scss')
 @endsection
+@section('page-script')
+  @vite('resources/assets/js/pages-auth.js')
+@endsection
 
 @section('content')
   <div class="authentication-wrapper authentication-basic container-p-y">
@@ -28,7 +31,8 @@
               <div class="input-group input-group-merge">
                 <input type="password" id="password" class="form-control" name="password"
                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+                {{-- CORRECCIÓN AQUÍ: de "ti-eye-off" a "tabler-eye-off" --}}
+                <span class="input-group-text cursor-pointer"><i class="ti tabler-eye-off"></i></span>
               </div>
             </div>
             <div class="mb-3">

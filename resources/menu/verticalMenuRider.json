@@ -3,7 +3,7 @@
     {
       "url": "rider/dashboard",
       "name": "Dashboard",
-      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "icon": "menu-icon ti tabler-smart-home",
       "slug": "rider.dashboard"
     }
   ]

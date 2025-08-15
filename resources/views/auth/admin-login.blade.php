@@ -3,6 +3,9 @@
 @section('page-style')
   @vite('resources/assets/vendor/scss/pages/page-auth.scss')
 @endsection
+@section('page-script')
+  @vite('resources/assets/js/pages-auth.js')
+@endsection
 
 @section('content')
   <div class="authentication-wrapper authentication-basic container-p-y">
@@ -15,7 +18,7 @@
             </a>
           </div>
           <h4 class="mb-1 pt-2">Panel de Administración</h4>
-          <p class="mb-4">Inicia sesión para continuar</p>
+          <p class="mb-4">Por favor, inicia sesión para continuar</p>
           <form id="formAuthentication" class="mb-3" action="{{ route('admin.login') }}" method="POST">
             @csrf
             <div class="mb-3">
@@ -24,11 +27,15 @@
                 autofocus>
             </div>
             <div class="mb-3 form-password-toggle">
-              <label class="form-label" for="password">Contraseña</label>
+              <div class="d-flex justify-content-between">
+                <label class="form-label" for="password">Contraseña</label>
+              </div>
               <div class="input-group input-group-merge">
                 <input type="password" id="password" class="form-control" name="password"
-                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                  aria-describedby="password" />
+                {{-- CORRECCIÓN AQUÍ: de "ti-eye-off" a "tabler-eye-off" --}}
+                <span class="input-group-text cursor-pointer"><i class="ti tabler-eye-off"></i></span>
               </div>
             </div>
             <div class="mb-3">

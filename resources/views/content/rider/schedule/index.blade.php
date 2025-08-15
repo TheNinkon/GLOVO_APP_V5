@@ -19,7 +19,7 @@
   @endif
 
   @isset($forecast)
-    {{-- NUEVO PANEL DE RESUMEN --}}
+    {{-- PANEL DE RESUMEN --}}
     <div class="card mb-4" id="schedule-summary" data-contract-hours="{{ $rider->weekly_contract_hours }}">
       <div class="card-body d-flex justify-content-around">
         <div class="text-center">
@@ -33,11 +33,10 @@
       </div>
     </div>
 
-
     <div class="card">
       <div class="card-header">
         <h5 class="card-title">Horario para la semana del {{ $startOfWeek->format('d/m/Y') }}</h5>
-        <p class="card-subtitle">Haz clic en los turnos verdes para seleccionarlos.</p>
+        <p class="card-subtitle">Haz clic en los turnos para seleccionarlos.</p>
       </div>
       <div class="card-body">
         <form action="{{ route('rider.schedule.store') }}" method="POST">
@@ -72,7 +71,6 @@
                         $isMine = isset($mySchedules[$slotIdentifier]);
                         $isFull = $booked >= $demand;
                       @endphp
-                      {{-- La lógica de la celda es la misma, pero el contenido cambia --}}
                       <td
                         class="slot @if ($isMine) slot-mine @elseif($isFull || $demand == 0) slot-full @else slot-available @endif">
                         @if ($demand > 0)
@@ -105,7 +103,7 @@
   @endisset
 @endsection
 
-{{-- NUEVA SECCIÓN DE SCRIPT --}}
+{{-- SECCIÓN DE SCRIPT ACTUALIZADA --}}
 @section('page-script')
-  @vite('resources/assets/js/custom/schedule-picker.js')
+  @vite('resources/assets/js/schedule-picker.js') {{-- <-- RUTA CORREGIDA --}}
 @endsection

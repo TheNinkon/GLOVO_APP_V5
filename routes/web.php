@@ -5,7 +5,8 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\RiderLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Rider\DashboardController as RiderDashboardController;
-use App\Http\Controllers\Admin\RiderController as AdminRiderController; // ← NUEVA línea
+use App\Http\Controllers\Admin\RiderController as AdminRiderController;
+use App\Http\Controllers\Admin\ForecastController; // Nueva línea agregada
 
 /*
 |--------------------------------------------------------------------------
@@ -35,10 +36,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // CRUD de empleados (riders)
         Route::resource('/riders', AdminRiderController::class);
+
+        // Forecasts (solo index, create y store)
+        Route::resource('/forecasts', ForecastController::class)->only(['index', 'create', 'store']);
     });
 });
 
-// --- RUTAS DE RIDER (YA AUTENTICADO) ---
-Route::prefix('rider')->name('rider.')->middleware(['auth:rider'])->group(function () {
-    Route::get('/dashboard', [RiderDashboardController::class, 'index'])->name('dashboard');
+// --- RUTAS DE RIDER ---
+Route::prefix('rider')->name('rider.')->group(function () {
+
+    Route::get('/login', [RiderLoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [RiderLoginController::class, 'login']);
+    Route::post('/logout', [RiderLoginController::class, 'logout'])->name('logout');
+
+    Route::middleware(['auth:rider'])->group(function () {
+        Route::get('/dashboard', [RiderDashboardController::class, 'index'])->name('dashboard');
+
+        // ---- NUEVAS RUTAS PARA EL HORARIO ----
+        Route::get('/schedule', [App\Http\Controllers\Rider\ScheduleController::class, 'index'])->name('schedule.index');
+        Route::post('/schedule', [App\Http\Controllers\Rider\ScheduleController::class, 'store'])->name('schedule.store');
+    });
 });

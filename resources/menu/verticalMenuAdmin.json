@@ -11,6 +11,12 @@
       "name": "Gestionar Riders",
       "icon": "menu-icon ti tabler-users",
       "slug": "admin.riders.index"
+    },
+    {
+      "url": "admin/forecasts",
+      "name": "Gestionar Forecasts",
+      "icon": "menu-icon ti tabler-file-analytics",
+      "slug": "admin.forecasts.index"
     }
   ]
 }

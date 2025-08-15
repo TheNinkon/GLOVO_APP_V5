@@ -5,6 +5,12 @@
       "name": "Dashboard",
       "icon": "menu-icon ti tabler-smart-home",
       "slug": "admin.dashboard"
+    },
+    {
+      "url": "admin/riders",
+      "name": "Gestionar Riders",
+      "icon": "menu-icon ti tabler-users",
+      "slug": "admin.riders.index"
     }
   ]
 }

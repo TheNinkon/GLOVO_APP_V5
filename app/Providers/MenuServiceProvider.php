@@ -2,32 +2,33 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\View;
-use Illuminate\Routing\Route;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
 class MenuServiceProvider extends ServiceProvider
 {
-  /**
-   * Register services.
-   */
-  public function register(): void
-  {
-    //
-  }
+    public function boot(): void
+    {
+        view()->composer('*', function ($view) {
+            $verticalMenuData = null;
+            $horizontalMenuData = null;
 
-  /**
-   * Bootstrap services.
-   */
-  public function boot(): void
-  {
-    $verticalMenuJson = file_get_contents(base_path('resources/menu/verticalMenu.json'));
-    $verticalMenuData = json_decode($verticalMenuJson);
-    $horizontalMenuJson = file_get_contents(base_path('resources/menu/horizontalMenu.json'));
-    $horizontalMenuData = json_decode($horizontalMenuJson);
+            if (Auth::guard('web')->check()) {
+                $adminMenuPath = base_path('resources/menu/verticalMenuAdmin.json');
+                if (File::exists($adminMenuPath)) {
+                    $verticalMenuJson = File::get($adminMenuPath);
+                    $verticalMenuData = json_decode($verticalMenuJson);
+                }
+            } elseif (Auth::guard('rider')->check()) {
+                $riderMenuPath = base_path('resources/menu/verticalMenuRider.json');
+                if (File::exists($riderMenuPath)) {
+                    $verticalMenuJson = File::get($riderMenuPath);
+                    $verticalMenuData = json_decode($verticalMenuJson);
+                }
+            }
 
-    // Share all menuData to all the views
-    $this->app->make('view')->share('menuData', [$verticalMenuData, $horizontalMenuData]);
-  }
+            $view->with('menuData', [$verticalMenuData, $horizontalMenuData]);
+        });
+    }
 }

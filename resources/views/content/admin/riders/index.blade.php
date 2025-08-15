@@ -42,8 +42,9 @@
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="card-title mb-0">Listado de Riders</h5>
+      {{-- ICONO CORREGIDO AQUÍ: de "ti-plus" a "tabler-plus" --}}
       <a href="{{ route('admin.riders.create') }}" class="btn btn-primary">
-        <i class="ti ti-plus me-1"></i> Crear Rider
+        <i class="ti tabler-plus me-1"></i> Crear Rider
       </a>
     </div>
     <div class="card-datatable table-responsive">

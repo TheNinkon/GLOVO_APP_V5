@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Rider extends Authenticatable
 {
     use HasFactory, Notifiable;
 
     /**
-     * The guard associated with the model.
-     *
+     * Guard asociado al modelo.
      * @var string
      */
     protected $guard = 'rider';
@@ -27,7 +28,7 @@ class Rider extends Authenticatable
         'start_date',
         'status',
         'notes',
-        'weekly_contract_hours', // <-- NUEVO CAMPO AÑADIDO
+        'weekly_contract_hours',
     ];
 
     protected $hidden = [
@@ -38,8 +39,20 @@ class Rider extends Authenticatable
     protected function casts(): array
     {
         return [
-            'password' => 'hashed',
+            'password'   => 'hashed',
             'start_date' => 'date',
         ];
+    }
+
+    /** Historial de asignaciones del rider */
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class);
+    }
+
+    /** Asignación activa (si existe) */
+    public function activeAssignment(): HasOne
+    {
+        return $this->hasOne(Assignment::class)->where('status', 'active');
     }
 }

@@ -9,7 +9,6 @@ class RiderUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Usamos la política para verificar si el usuario puede actualizar este rider específico
         $rider = $this->route('rider');
         return $this->user()->can('update', $rider);
     }
@@ -23,8 +22,10 @@ class RiderUpdateRequest extends FormRequest
             'dni' => ['required', 'string', Rule::unique('riders')->ignore($riderId)],
             'email' => ['required', 'email', Rule::unique('riders')->ignore($riderId)],
             'city' => 'required|string|max:255',
-            'password' => 'nullable|string|min:8', // Opcional al editar
+            'password' => 'nullable|string|min:8',
             'status' => 'required|in:active,inactive,blocked',
+            // --- AÑADIR ESTA LÍNEA DE VALIDACIÓN ---
+            'weekly_contract_hours' => 'required|integer|min:0|max:100',
         ];
     }
 }

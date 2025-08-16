@@ -17,6 +17,12 @@
       "name": "Gestionar Forecasts",
       "icon": "menu-icon ti tabler-file-analytics",
       "slug": "admin.forecasts.index"
+    },
+    {
+      "url": "admin/accounts",
+      "name": "Gestionar Cuentas",
+      "icon": "menu-icon ti tabler-id",
+      "slug": "admin.accounts.index"
     }
   ]
 }

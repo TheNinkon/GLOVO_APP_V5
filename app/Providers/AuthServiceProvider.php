@@ -2,24 +2,19 @@
 
 namespace App\Providers;
 
-use App\Models\Rider;          // <-- Añadir esta línea
-use App\Policies\RiderPolicy;   // <-- Añadir esta línea
+use App\Models\Rider;
+use App\Policies\RiderPolicy;
+use App\Models\Account; // <-- Añadir
+use App\Policies\AccountPolicy; // <-- Añadir
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    /**
-     * The model to policy mappings for the application.
-     *
-     * @var array<class-string, class-string>
-     */
     protected $policies = [
-        Rider::class => RiderPolicy::class, // <-- Añadir esta línea
+        Rider::class => RiderPolicy::class,
+        Account::class => AccountPolicy::class, // <-- Añadir esta línea
     ];
 
-    /**
-     * Register any authentication / authorization services.
-     */
     public function boot(): void
     {
         //

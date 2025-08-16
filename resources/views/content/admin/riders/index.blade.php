@@ -14,8 +14,8 @@
 
 {{-- SECCIÓN DE SCRIPT VERIFICADA --}}
 @section('page-script')
-  @vite('resources/assets/js/custom/riders-list.js')
-  @vite('resources/assets/js/custom/schedule-picker.js')
+  @vite('resources/assets/js/riders-list.js')
+  @vite('resources/assets/js/schedule-picker.js')
 
   <script>
     @if (session('success'))

@@ -8,29 +8,45 @@ $.ajaxSetup({
 ('use strict');
 
 $(function () {
-  const dt_basic_table = $('#riders-table');
+  const dt_table = $('#accounts-table');
   let dataTable;
 
-  if (dt_basic_table.length) {
-    dataTable = dt_basic_table.DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '/admin/riders',
-      columns: [
-        { data: 'id', name: 'id' },
-        { data: 'full_name', name: 'full_name' },
-        { data: 'dni', name: 'dni' },
-        { data: 'city', name: 'city' },
-        { data: 'email', name: 'email' },
-        { data: 'status', name: 'status' },
-        { data: 'action', name: 'action', orderable: false, searchable: false }
-      ]
-      // SE HA ELIMINADO LA OPCIÓN "language" DE AQUÍ
+  // --- Alerta de éxito si viene desde la sesión (inyectada en la vista) ---
+  const successMessage = $('.card').data('success-message');
+  if (successMessage) {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Hecho!',
+      text: successMessage,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true
     });
   }
 
-  // La lógica para el borrado con SweetAlert2 se queda igual
-  $(document).on('click', '.delete-rider-btn', function () {
+  // Inicialización DataTables
+  if (dt_table.length) {
+    dataTable = dt_table.DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '/admin/accounts',
+      columns: [
+        { data: 'id', name: 'id' },
+        { data: 'courier_id', name: 'courier_id' },
+        { data: 'email', name: 'email' },
+        { data: 'city', name: 'city' },
+        { data: 'status', name: 'status' },
+        { data: 'assigned_to', name: 'assigned_to', orderable: false, searchable: false }, // <-- NUEVA COLUMNA
+        { data: 'action', name: 'action', orderable: false, searchable: false }
+      ],
+      order: [[0, 'desc']]
+    });
+  }
+
+  // Borrado con confirmación
+  $(document).on('click', '.delete-account-btn', function () {
     const deleteUrl = $(this).data('url');
 
     Swal.fire({
@@ -40,10 +56,7 @@ $(function () {
       showCancelButton: true,
       confirmButtonText: 'Sí, ¡eliminar!',
       cancelButtonText: 'Cancelar',
-      customClass: {
-        confirmButton: 'btn btn-primary me-3',
-        cancelButton: 'btn btn-label-secondary'
-      },
+      customClass: { confirmButton: 'btn btn-primary me-3', cancelButton: 'btn btn-label-secondary' },
       buttonsStyling: false
     }).then(function (result) {
       if (result.isConfirmed) {
@@ -51,13 +64,11 @@ $(function () {
           url: deleteUrl,
           type: 'DELETE',
           success: function (response) {
-            if (dataTable) {
-              dataTable.ajax.reload();
-            }
+            if (dataTable) dataTable.ajax.reload(null, false);
             Swal.fire({
               icon: 'success',
               title: '¡Eliminado!',
-              text: response.message,
+              text: response?.message || 'Cuenta eliminada con éxito.',
               toast: true,
               position: 'top-end',
               showConfirmButton: false,
@@ -65,14 +76,11 @@ $(function () {
               timerProgressBar: true
             });
           },
-          error: function (xhr) {
+          error: function () {
             Swal.fire({
               icon: 'error',
               title: 'Error',
-              text: 'No se pudo eliminar el rider.',
-              customClass: {
-                confirmButton: 'btn btn-primary'
-              }
+              text: 'No se pudo eliminar la cuenta.'
             });
           }
         });

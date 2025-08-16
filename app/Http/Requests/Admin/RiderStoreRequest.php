@@ -8,7 +8,6 @@ class RiderStoreRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Usamos la política para verificar si el usuario puede crear
         return $this->user()->can('create', \App\Models\Rider::class);
     }
 
@@ -21,6 +20,8 @@ class RiderStoreRequest extends FormRequest
             'city' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'status' => 'required|in:active,inactive,blocked',
+            // --- AÑADIR ESTA LÍNEA DE VALIDACIÓN ---
+            'weekly_contract_hours' => 'required|integer|min:0|max:100',
         ];
     }
 }

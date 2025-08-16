@@ -1,4 +1,5 @@
 @extends('layouts/layoutMaster')
+
 @section('title', 'Crear Nuevo Rider')
 
 @section('content')
